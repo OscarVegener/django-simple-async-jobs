@@ -5,6 +5,11 @@ Simple async jobs django app
     Simple async jobs is a Django app that provides you a simple way
     for running periodic and one off jobs using django management commands.
 
+Installation
+------------
+
+``pip install django-simple-async-jobs``
+
 Quick start
 -----------
 
