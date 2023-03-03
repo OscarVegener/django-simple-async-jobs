@@ -7,3 +7,5 @@ dist/*
 *.pyc
 
 .vscode/*
+
+test_project/db.sqlite3

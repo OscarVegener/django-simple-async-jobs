@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "simple_jobs",
 ]
 
 MIDDLEWARE = [
@@ -121,3 +122,63 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Simple jobs
+
+JOB_POLLER_TIMEOUT_BEFORE_KILLED = 60
+
+DEFAULT_LOGGER_NAME = "jobs"
+PERIODIC_JOBS_LOGGER_NAME = "periodic_jobs"
+ONE_OFF_JOBS_LOGGER_NAME = "one_off_jobs"
+
+DEFAULT_MAX_ONE_OFF_JOBS_RUNS_PER_LIFE = 10
+DEFAULT_MAX_PERIODIC_JOBS_RUNS_PER_LIFE = 50
+
+DEFAULT_MAX_JOB_RETRIES = 6
+DEFAULT_JOB_RETRY_SECONDS_INTERVAL = 900
+
+# Logging
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+        },
+        "jobs": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+        },
+        "periodic": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+        },
+        "one_off": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "root": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+        },
+        "jobs": {
+            "handlers": ["jobs"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "periodic_jobs": {
+            "handlers": ["periodic"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "one_off_jobs": {
+            "handlers": ["one_off"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+    },
+}
