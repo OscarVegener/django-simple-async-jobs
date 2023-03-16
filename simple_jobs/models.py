@@ -12,9 +12,9 @@ from django.utils.translation import gettext_lazy as _
 
 class JobStatusChoices(models.TextChoices):
     # job is ready to be executed
-    pending = "PENDING", _("pending")
+    pending = "PENDING", _("Pending")
     # worker has started executing the job
-    in_progress = "IN_PROGRESS", _("IN_PROGRESS")
+    in_progress = "IN_PROGRESS", _("In progress")
     # job's function resulted in an Exception
     failed = "FAILED", _("Failed")
     # job's function executed successfully
@@ -73,7 +73,7 @@ class Job(models.Model):
     def run(self, logger=None):
         self.status = JobStatusChoices.in_progress
         self.save()
-    
+
         if logger is not None:
             JOB_LOGGER = logger
         else:
