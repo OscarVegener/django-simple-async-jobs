@@ -3,6 +3,7 @@ from typing import List, Union
 
 from django.conf import settings
 from django.db.models import QuerySet
+
 from simple_jobs.constants import GENERAL_ONE_OFF_JOBS
 from simple_jobs.management.commands.base_job_poller import BaseJobPoller
 from simple_jobs.models import Job, JobStatusChoices
@@ -27,4 +28,8 @@ class Command(BaseJobPoller):
 
     async def _is_job_ready(self, job: Job) -> bool:
         is_pre_ready = await super()._is_job_ready(job)
+
+        if job.allow_retries and job.is_scheduled_for_retry:
+            return True
+
         return is_pre_ready and job.status == JobStatusChoices.pending
