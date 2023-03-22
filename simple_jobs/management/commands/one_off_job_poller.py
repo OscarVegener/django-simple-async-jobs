@@ -30,6 +30,6 @@ class Command(BaseJobPoller):
         is_pre_ready = await super()._is_job_ready(job)
 
         if job.allow_retries and job.is_scheduled_for_retry:
-            return True
+            return is_pre_ready
 
         return is_pre_ready and job.status == JobStatusChoices.pending
